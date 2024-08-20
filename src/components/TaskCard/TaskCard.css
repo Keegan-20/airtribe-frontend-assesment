@@ -1,0 +1,21 @@
+.task_card{
+    width:100%;
+    min-height:50px;
+    border:1px solid #dcdcdc;
+    border-radius:8px;
+    padding:1rem;
+    margin:1rem 0;
+
+}
+
+.task_text{
+    font-size:18px;
+    font-weight:600;
+    margin-bottom:1rem;
+}
+
+.task_card_bottom_line{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
