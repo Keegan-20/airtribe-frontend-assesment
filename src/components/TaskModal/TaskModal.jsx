@@ -21,10 +21,10 @@ const TaskModal = ({ setAllTasks }) => {
     setAllTasks((prev) => {
       return [...prev, taskData];
     });
-    //clearing the previous task input from the from
+    //clearing the previous task input from the  input field
     setTaskData({
       task: "", //property name and default value
-      status: "todo",
+      status: "notStarted",
     });
   };
   return (
