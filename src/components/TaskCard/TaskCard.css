@@ -10,8 +10,10 @@
 
 .task_card:hover{
     background-color:rgba(0, 0, 0, 0.3) ;
-    cursor: pointer;
+    cursor: grab;
 }
+
+
 .task_text{
     font-size:18px;
     font-weight:600;
