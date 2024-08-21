@@ -48,6 +48,7 @@ const TaskModal = ({ onSave,onClose }) => {
           placeholder="Enter your Task"
           autoComplete="off"
           onChange={handleChange}
+          required
         />
          <textarea
           name="description"

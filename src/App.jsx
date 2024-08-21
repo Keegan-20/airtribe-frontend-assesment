@@ -2,35 +2,33 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import TaskColumn from "./components/TaskColumn/TaskColumn";
 import TaskModal from "./components/TaskModal/TaskModal";
+import { useModal } from "./Custom Hook/useModal";
 import { loadTasksFromStorage, saveTasksToStorage } from "./utils";
 
 function App() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentStatus, setCurrentStatus] = useState("");
+  const { isModalOpen, openModal, closeModal } = useModal(); 
   const [allTasks, setAllTasks] = useState(loadTasksFromStorage());
 
   useEffect(() => {
     saveTasksToStorage(allTasks);
   }, [allTasks]);
 
-  // Function to handle adding a task under a specific status
+  //opening and closing of modal
   const handleAddTask = (status) => {
     setCurrentStatus(status);
-    setIsModalOpen(true); // Open the modal to add a new task
+    openModal(); 
   };
 
   const handleSaveTask = (task) => {
     setAllTasks((prevTasks) => [...prevTasks, { ...task, status: currentStatus }]);
-    setIsModalOpen(false);
+    closeModal(); 
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
   
   return (
     <div className="app">
-      {isModalOpen && <TaskModal onSave={handleSaveTask}  onClose={handleCloseModal}/>}
+      {isModalOpen && <TaskModal onSave={handleSaveTask}  onClose={closeModal}/>}
       <main className="app_main">
         <TaskColumn
           taskColumnTitle="Not Started"

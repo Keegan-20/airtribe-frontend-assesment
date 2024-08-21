@@ -24,3 +24,25 @@
     color: grey;
     font-weight: 600;
 }
+
+.new_task_button {
+    background-color: transparent;
+    font-size: 1.2rem;
+    border: none;
+    outline: none;
+    color: rgb(139, 139, 139);
+    display: flex;
+    cursor: pointer;
+    margin-top: 0.8rem;
+    align-items: center;
+    gap: 5px; 
+}
+
+.new_task_button:hover{
+ color: rgb(83, 81, 81);
+}
+
+
+.new_task_button svg {
+    font-size: 1.2rem;
+}
