@@ -1,35 +1,45 @@
 import { useState } from "react";
 import "./TaskModal.css";
 
-const TaskModal = ({ setAllTasks }) => {
- 
+const TaskModal = ({ onSave,onClose }) => {
+  // Initialize taskData with an empty task and default status
   const [taskData, setTaskData] = useState({
-    task: "", //property name and default value
-    status: "notStarted",
+    task: "", 
+    description:"",
+    status: "notStarted", 
   });
 
+  // Handle changes to the input fields
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setTaskData((prev) => {
-      return { ...prev, [name]: value }; //inorder to avoid overwrite and store the previous data and update the value.
-    });
+    setTaskData((prev) => ({
+      ...prev, // spread the previous state inorder to avoid overwrite and store the previous data and update the value.
+      [name]: value, // Update the specific property that was changed
+    }));
   };
 
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(taskData);
-    setAllTasks((prev) => {
-      return [...prev, taskData];
-    });
-    //clearing the previous task input from the  input field
-    setTaskData({
-      task: "", //property name and default value
-      status: "notStarted",
-    });
+    if (taskData.task) {
+      onSave(taskData); 
+      setTaskData({
+        task: "", 
+        description:"",
+        status: "notStarted", // Reset the status to the default value after submission
+      });
+      onClose();
+    }
   };
+
   return (
-    <header className="app_header">
+    <>
+    <div className="modal_overlay" onClick={onClose}></div>
+    <div className="task_modal">
       <form onSubmit={handleSubmit}>
+      <button className="close_button" onClick={onClose}>
+          &times;
+        </button>
         <input
           type="text"
           name="task"
@@ -39,25 +49,19 @@ const TaskModal = ({ setAllTasks }) => {
           autoComplete="off"
           onChange={handleChange}
         />
-        <div className="tags_section">
-          <div>
-            <select
-              className="task_status"
-              name="status"
-              value={taskData.status}
-              onChange={handleChange}
-            >
-              <option value="notStarted">Not Started</option>
-              <option value="inProgress">In Progress</option>
-              <option value="completed">Completed</option>
-            </select>
-            <button type="submit" className="task_submit">
-              + Add Task
-            </button>
-          </div>
-        </div>
+         <textarea
+          name="description"
+          value={taskData.description}
+          className="task_description"
+          placeholder="Enter task description (optional)"
+          onChange={handleChange}
+        />
+        <button type="submit" className="task_submit">
+          + Add Task
+        </button>
       </form>
-    </header>
+    </div>
+    </>
   );
 };
 
