@@ -1,15 +1,23 @@
+// src/App.jsx
 import "./App.css";
 import { useState, useEffect } from "react";
 import TaskColumn from "./components/TaskColumn/TaskColumn";
 import TaskModal from "./components/TaskModal/TaskModal";
+import Header from "./components/Header/Header"; 
 import { useModal } from "./Custom Hook/useModal";
 import { loadTasksFromStorage, saveTasksToStorage } from "./utils";
 
 function App() {
   const [currentStatus, setCurrentStatus] = useState("");
   const [currentTask, setCurrentTask] = useState(null);
-  const { isModalOpen, openModal, closeModal } = useModal();
   const [allTasks, setAllTasks] = useState(loadTasksFromStorage());
+  const [taskColumns, setTaskColumns] = useState([
+    { title: "Not Started", status: "notStarted", color: "#FFCFD4" },
+    { title: "In Progress", status: "inProgress", color: "#FDF0CF" },
+    { title: "Completed", status: "completed", color: "#CDE8E2" },
+  ]);
+  
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   useEffect(() => {
     saveTasksToStorage(allTasks);
@@ -17,13 +25,13 @@ function App() {
 
   const handleAddTask = (status) => {
     setCurrentStatus(status);
-    setCurrentTask(null); // reset current task when adding new task
+    setCurrentTask(null);
     openModal();
   };
 
   const handleEditTask = (task, index) => {
     setCurrentStatus(task.status);
-    setCurrentTask({ ...task, index }); // store the index with the task data
+    setCurrentTask({ ...task, index });
     openModal();
   };
 
@@ -31,12 +39,11 @@ function App() {
     if (currentTask) {
       setAllTasks((prevTasks) => {
         const updatedTasks = [...prevTasks];
-        updatedTasks[currentTask.index] = task; // update the existing task
+        updatedTasks[currentTask.index] = task;
         return updatedTasks;
       });
     } else {
-      setAllTasks((prevTasks) => [...prevTasks, { ...task, status: currentStatus, 
-        id:Date.now() }]);
+      setAllTasks((prevTasks) => [...prevTasks, { ...task, status: currentStatus, id: Date.now() }]);
     }
     closeModal();
   };
@@ -45,10 +52,20 @@ function App() {
     setAllTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskToDelete.id));
     closeModal();
   };
-  
+
+  const handleAddColumn = () => {
+    const newStatus = `status_${Date.now()}`;
+    const newColumn = {
+      title: "New Status",
+      status: newStatus,
+      color: "#E0E0E0",
+    };
+    setTaskColumns([...taskColumns, newColumn]);
+  };
 
   return (
     <div className="app">
+      <Header onAddColumn={handleAddColumn} /> {/* Add Header component */}
       {isModalOpen && (
         <TaskModal
           taskData={currentTask}
@@ -58,30 +75,17 @@ function App() {
         />
       )}
       <main className="app_main">
-        <TaskColumn
-          taskColumnTitle="Not Started"
-          color="#FFCFD4"
-          tasks={allTasks}
-          status="notStarted"
-          onAddTask={handleAddTask}
-          onEditTask={handleEditTask}
-        />
-        <TaskColumn
-          taskColumnTitle="In Progress"
-          color="#FDF0CF"
-          tasks={allTasks}
-          status="inProgress"
-          onAddTask={handleAddTask}
-          onEditTask={handleEditTask}
-        />
-        <TaskColumn
-          taskColumnTitle="Completed"
-          color="#CDE8E2"
-          tasks={allTasks}
-          status="completed"
-          onAddTask={handleAddTask}
-          onEditTask={handleEditTask}
-        />
+        {taskColumns.map((column) => (
+          <TaskColumn
+            key={column.status}
+            taskColumnTitle={column.title}
+            color={column.color}
+            tasks={allTasks}
+            status={column.status}
+            onAddTask={handleAddTask}
+            onEditTask={handleEditTask}
+          />
+        ))}
       </main>
     </div>
   );
