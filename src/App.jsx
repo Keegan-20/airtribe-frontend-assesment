@@ -11,6 +11,7 @@ function App() {
   const [currentStatus, setCurrentStatus] = useState("");
   const [currentTask, setCurrentTask] = useState(null);
   const [allTasks, setAllTasks] = useState(loadTasksFromStorage());
+
   const [taskColumns, setTaskColumns] = useState([
     { title: "Not Started", status: "notStarted", color: "#FFCFD4" },
     { title: "In Progress", status: "inProgress", color: "#FDF0CF" },
@@ -65,7 +66,7 @@ function App() {
 
   return (
     <div className="app">
-      <Header onAddColumn={handleAddColumn} /> {/* Add Header component */}
+      <Header onAddColumn={handleAddColumn} /> 
       {isModalOpen && (
         <TaskModal
           taskData={currentTask}
