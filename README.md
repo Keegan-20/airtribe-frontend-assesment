@@ -1,8 +1,10 @@
-# React + Vite
+# Airtribe Frontend Assesment
+## Modern Task Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Modern Task Manager is a web application that helps you manage your tasks efficiently. It allows you to create, edit, delete, and organize tasks across different status columns using a drag-and-drop interface.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Task Management**: Add, edit, and delete tasks.
+- **Drag and Drop**: Organize tasks by dragging and dropping them between columns.
+- **Customizable Columns**: Add new status columns to fit your workflow.
