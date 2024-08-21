@@ -1,4 +1,3 @@
-// src/App.jsx
 import "./App.css";
 import { useState, useEffect } from "react";
 import TaskColumn from "./components/TaskColumn/TaskColumn";
@@ -79,10 +78,11 @@ function App() {
     closeModal();
   };
 
-  const handleAddColumn = () => {
+  //option to add new Column
+  const handleAddColumn = (statusName) => {
     const newStatus = `status_${Date.now()}`;
     const newColumn = {
-      title: "New Status",
+      title: statusName,
       status: newStatus,
       color: "#E0E0E0",
     };
