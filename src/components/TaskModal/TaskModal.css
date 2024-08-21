@@ -85,6 +85,12 @@
   .task_description::placeholder {
     color: #686868;
   }
+  .button_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+  }
   
   .task_submit {
     font-size: 16px;
@@ -94,12 +100,28 @@
     border-radius: 5px;
     height: 40px;
     padding: 8px 12px;
-    width: 95%;
+    width: auto;
     border: none;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 0;
+    flex-grow: 1;
   }
   
   .task_submit:hover {
     background-color: #231f5c;
   }
+  
+  .task_delete {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    margin-left: 10px;
+    height: 40px;
+  }
+  
+  .task_delete svg {
+    vertical-align: middle;
+  }
+  
